@@ -3,6 +3,11 @@
 <head>
   <title>BackboneRailsMaps</title>
   <%= stylesheet_link_tag    "application" %>
+
+  <script type="text/javascript"
+    src="https://maps.googleapis.com/maps/api/js?key=<%= @google_api_key %>&sensor=true">
+  </script>
+
   <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
 </head>
