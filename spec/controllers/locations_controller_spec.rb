@@ -22,7 +22,6 @@ describe LocationsController do
       expect(json_response).to have(1).location
 
       location_json = json_response.first
-      puts location_json.inspect
       expect(location_json[:id]).to eq(location.id)
       expect(location_json[:address]).to eq(location.address)
     end
@@ -31,16 +30,16 @@ describe LocationsController do
   describe "GET show" do
     it "assigns the requested location as @location" do
       location = Location.create! valid_attributes
-      get :show, {:id => location.to_param}, valid_session
+      get_json :show, {:id => location.to_param}, valid_session
       assigns(:location).should eq(location)
     end
 
     it "responds with the location in JSON" do
       location = Location.create! valid_attributes
-      get :show, {:id => location.to_param}, valid_session
+      get_json :show, {:id => location.to_param}, valid_session
 
-      expect(json_body[:id]).to eq(location.id)
-      expect(json_body[:address]).to eq(location.address)
+      expect(json_response[:id]).to eq(location.id)
+      expect(json_response[:address]).to eq(location.address)
     end
   end
 
