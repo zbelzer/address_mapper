@@ -6,14 +6,19 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require underscore
+//= require backbone
+//= require backbone_rails_sync
+//= require backbone_datalink
 //= require_tree .
 
 function initialize() {
   var mapOptions = {
-    center: new google.maps.LatLng(-34.397, 150.644),
+    center: new google.maps.LatLng(41.88, -87.62),
     zoom: 8
   };
-  var map = new google.maps.Map(document.getElementById("map-canvas"),
-      mapOptions);
+
+  var map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
 }
+
 google.maps.event.addDomListener(window, 'load', initialize);
