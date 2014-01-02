@@ -1,0 +1,7 @@
+<% for location in @locations : %>
+  <div class="location" data-location-id="<%= location.id %>">
+    <label><%= location.address %></label>
+    <button class="destroy">X</button>
+  </div>
+  <input class="edit" value="<%= location.address %>">
+<% end %>

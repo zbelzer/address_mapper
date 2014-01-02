@@ -10,15 +10,9 @@
 //= require backbone
 //= require backbone_rails_sync
 //= require backbone_datalink
+//= require ./app
+//= require_directory ./models
+//= require_directory ./collections
+//= require_directory ./templates
+//= require_directory ./views
 //= require_tree .
-
-function initialize() {
-  var mapOptions = {
-    center: new google.maps.LatLng(41.88, -87.62),
-    zoom: 8
-  };
-
-  var map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
-}
-
-google.maps.event.addDomListener(window, 'load', initialize);

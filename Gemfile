@@ -11,6 +11,7 @@ group :assets do
   gem 'coffee-rails', '~> 3.1.1'
   gem 'uglifier', '>= 1.0.3'
   gem "rails-backbone"
+  gem 'eco'
 end
 
 group :test, :development do
