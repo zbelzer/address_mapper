@@ -4,8 +4,9 @@ App.Views.Map = Backbone.View.extend({
 
     this.markers = {};
     this.center = new google.maps.LatLng(41.88, -87.62);
+    this.bounds = new google.maps.LatLngBounds ();
     this.map = new google.maps.Map(document.getElementById("map-canvas"), {
-      center: this.center, zoom: 8
+      center: this.center, zoom: 13
     });
     this.geocoder = new google.maps.Geocoder();
   },
@@ -31,14 +32,20 @@ App.Views.Map = Backbone.View.extend({
       map: this.map,
       position: coords
     });
+
+    this.bounds.extend(coords);
+    this.map.fitBounds(this.bounds);
+  },
+
+  removeMarker: function(coords) {
+    this.markers[coords].setMap(null);
+    delete this.markers[coords];
   },
 
   clearMap: function() {
     var self = this;
     _.each(this.markers, function(value, key, list) {
-      value.setMap(null);
-      delete list[key]
+      self.removeMarker(key);
     });
-
-  }
+  },
 });
