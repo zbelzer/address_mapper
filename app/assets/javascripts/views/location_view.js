@@ -12,7 +12,7 @@ App.Views.LocationView = Backbone.View.extend({
   initialize: function() {
     this.data = App.locations;
     this.data.fetch({reset: true});
-    this.data.on("add remove change reset", this.render, this);
+    this.data.on("add remove reset", this.render, this);
     this.render();
 
     return this;
@@ -42,15 +42,13 @@ App.Views.LocationView = Backbone.View.extend({
         },
         error: function(result, jqXHR) {
           var response = jQuery.parseJSON(jqXHR.responseText)
-          self.showErrors(response)
+          self.showErrors($("div.new"), response)
         }
       });
     }
   },
 
   edit: function(e) {
-    this.revert();
-
     var $label = $(e.target);
     var $edit = $label.siblings(".edit")
 
@@ -62,6 +60,8 @@ App.Views.LocationView = Backbone.View.extend({
     var code = e.keyCode || e.which;
 
     if(code == 13) {
+      e.preventDefault();
+
       var self = this;
 
       var $target = $(e.target);
@@ -71,7 +71,15 @@ App.Views.LocationView = Backbone.View.extend({
       var model = this.data.get($parent.data('location-id'));
 
       model.save({address: address}, {
-        success: function() { self.revert(); }
+        success: function(model, response, options) {
+          self.render();
+        },
+        error: function(model, jqXHR, options) {
+          var response = jQuery.parseJSON(jqXHR.responseText)
+          $target.show();
+          console.log($target.get(0))
+          self.showErrors($parent, response);
+        }
       });
     }
   },
@@ -87,13 +95,24 @@ App.Views.LocationView = Backbone.View.extend({
   },
 
   revert: function(e) {
-    $(".location label").show();
-    $(".location .edit").hide();
+    // Re-rendering has some side-effects, so we'll just do this.
+    _.each(this.$el.find(".location").find("label"), function(label) {
+      var $label = $(label);
+      var $edit = $label.siblings(".edit");
+
+      $label.show();
+
+      $edit.val($label.text()); // Reset value
+      $edit.hide()
+    });
+
+    this.$el.find("input").removeClass('error');
+    this.$el.find(".errorMessage").remove();
   },
 
-  showErrors: function(errors) {
+  showErrors: function(target, errors) {
     _.each(errors, function(error, fieldName) {
-      var field = $('.new input[name="' + fieldName + '"]');
+      var field = target.find('input[name="' + fieldName + '"]');
       var errorMessage = $('<div />').text("The " + fieldName + " " + error).addClass('errorMessage');
       field.addClass('error').after(errorMessage);
     });

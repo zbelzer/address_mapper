@@ -103,6 +103,15 @@ describe LocationsController do
         location = Location.create! valid_attributes
         put_json :update, {:id => location.to_param, :location => valid_attributes}, valid_session
         response.should be_success
+
+      end
+
+      it "responds with the location in JSON" do
+        location = Location.create! valid_attributes
+        put_json :update, {:id => location.to_param, :location => valid_attributes}, valid_session
+
+        expect(json_response[:id]).to eq(location.id)
+        expect(json_response[:address]).to eq(location.address)
       end
     end
 

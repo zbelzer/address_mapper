@@ -38,7 +38,7 @@ class LocationsController < ApplicationController
 
     respond_to do |format|
       if @location.update_attributes(params[:location])
-        format.json { head :ok }
+        format.json { render json: @location }
       else
         format.json { render json: @location.errors, status: :unprocessable_entity }
       end
