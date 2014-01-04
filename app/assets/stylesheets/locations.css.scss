@@ -2,10 +2,21 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-.locations {
+#locations {
+  float: left;
+  width: 300px;
+
   .location {
+    padding: 2em 0.5em;
+
+    border-bottom: 2px solid black;
+
     .edit {
       display: none;
+    }
+
+    button {
+      float: right;
     }
   }
 }

@@ -1,12 +1,10 @@
-<div class="locations">
-  <label>Address: </label>
-  <input class="new" />
+<label>Address: </label>
+<input class="new" />
 
-  <% for location in @locations : %>
-    <div class="location" data-location-id="<%= location.id %>">
-      <label><%= location.address %></label>
-      <input class="edit" value="<%= location.address %>" />
-      <button class="destroy">X</button>
-    </div>
-  <% end %>
-</div>
+<% for location in @locations : %>
+  <div class="location" data-location-id="<%= location.id %>">
+    <label><%= location.address %></label>
+    <input class="edit" value="<%= location.address %>" />
+    <button class="destroy">X</button>
+  </div>
+<% end %>
