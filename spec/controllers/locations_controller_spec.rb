@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe LocationsController do
   def valid_attributes
-    {:address => "2510 W. Iowa St. Chicago, IL 60622"}
+    {:address => "2510 W. Iowa St. Chicago, Il 60622"}
   end
 
   def valid_session

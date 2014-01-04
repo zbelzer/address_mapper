@@ -8,6 +8,7 @@ describe Location do
       location = Location.create(valid_attributes)
       location.should be_persisted
     end
+
     it "validates presence of address" do
       location = Location.new(:address => nil)
       location.should_not be_valid
@@ -22,4 +23,11 @@ describe Location do
       location.errors[:address].should have(1).error
     end
   end 
+
+  describe "address" do
+    it "is normalized by capitalization" do
+      location = Location.create(:address => "500 davis st chicago")
+      expect(location.address).to eq("500 Davis St Chicago")
+    end
+  end
 end
