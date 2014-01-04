@@ -1,7 +1,10 @@
 var App = {
   Models: {},
   Collections: {},
-  Views: {}
+  Views: {},
+  Keys: {
+    ENTER: 13
+  }
 };
 
 $(function () {

@@ -31,7 +31,7 @@ App.Views.LocationView = Backbone.View.extend({
   create: function(e) {
     var code = e.keyCode || e.which;
 
-    if(code == 13) {
+    if(code == App.Keys.ENTER) {
       var address = $(e.target).val().trim();
       var newLocation = new App.Models.Location({address: address});
       var self = this;
@@ -41,7 +41,8 @@ App.Views.LocationView = Backbone.View.extend({
           self.data.add(newLocation)
         },
         error: function(result, jqXHR) {
-          alert(jqXHR.responseText)
+          var response = jQuery.parseJSON(jqXHR.responseText)
+          self.showErrors(response)
         }
       });
     }
@@ -88,6 +89,14 @@ App.Views.LocationView = Backbone.View.extend({
   revert: function(e) {
     $(".location label").show();
     $(".location .edit").hide();
+  },
+
+  showErrors: function(errors) {
+    _.each(errors, function(error, fieldName) {
+      var field = $('.new input[name="' + fieldName + '"]');
+      var errorMessage = $('<div />').text("The " + fieldName + " " + error).addClass('errorMessage');
+      field.addClass('error').after(errorMessage);
+    });
   },
 
 });
